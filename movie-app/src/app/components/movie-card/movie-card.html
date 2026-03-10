@@ -1,13 +1,14 @@
 <div class="card">
-  <a [routerLink]="['/movie', movie.id]">
+  <a [routerLink]="['/movie', movie.id]" class="poster-link">
     <img [src]="getImage()" [alt]="movie.title" class="poster" />
-    <div class="rating-badge">⭐ {{ movie.vote_average | number: '1.1-1' }}</div>
+    <div class="poster-overlay"></div>
+    <div class="rating-badge">{{ movie.vote_average | number: '1.1-1' }}</div>
   </a>
   <div class="info">
     <h3 class="title">{{ movie.title }}</h3>
-    <p class="year">📅 {{ movie.release_date | date: 'yyyy' }}</p>
-    <button (click)="toggleWatchlist()" [class.added]="isInWatchlist">
-      {{ isInWatchlist ? '✅ In Watchlist' : '+ Watchlist' }}
+    <p class="year">{{ movie.release_date | date: 'yyyy' }}</p>
+    <button class="watchlist-btn" (click)="toggleWatchlist()" [class.added]="isInWatchlist">
+      {{ isInWatchlist ? 'In Watchlist' : '+ Watchlist' }}
     </button>
   </div>
 </div>

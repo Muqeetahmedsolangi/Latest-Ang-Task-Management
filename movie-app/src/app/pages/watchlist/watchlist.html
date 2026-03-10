@@ -2,7 +2,7 @@
   <!-- Header -->
   <div class="header">
     <a routerLink="/" class="back-btn">← Back to Home</a>
-    <h1>🎯 My Watchlist</h1>
+    <h1>My Watchlist</h1>
     <p class="count">{{ movies.length }} movie{{ movies.length !== 1 ? 's' : '' }} saved</p>
   </div>
 
@@ -18,7 +18,7 @@
 
   <!-- Empty State -->
   <div class="empty" *ngIf="movies.length === 0">
-    <p>😕 Watchlist khali hai!</p>
+    <p>Your watchlist is empty</p>
     <a routerLink="/" class="browse-btn">Browse Movies</a>
   </div>
 </div>

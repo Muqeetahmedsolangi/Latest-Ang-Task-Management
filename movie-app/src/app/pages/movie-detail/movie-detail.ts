@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TmdbService } from '../../services/tmdb';
@@ -22,6 +22,7 @@ export class MovieDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private tmdb: TmdbService,
     public watchlist: WatchlistService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -30,10 +31,12 @@ export class MovieDetailComponent implements OnInit {
       next: (m) => {
         this.movie = m;
         this.loading = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Failed to load movie detail:', err);
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService } from '../../services/tmdb';
 import { WatchlistService } from '../../services/watchlist';
@@ -23,6 +23,7 @@ export class Home implements OnInit {
   constructor(
     private tmdb: TmdbService,
     private watchlist: WatchlistService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -36,10 +37,12 @@ export class Home implements OnInit {
         this.movies = res.results;
         this.totalPages = res.total_pages;
         this.loading = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Failed to load trending:', err);
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }
@@ -57,10 +60,12 @@ export class Home implements OnInit {
         this.movies = res.results;
         this.totalPages = res.total_pages;
         this.loading = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Search failed:', err);
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }
@@ -74,10 +79,12 @@ export class Home implements OnInit {
         next: (res) => {
           this.movies = res.results;
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error: (err) => {
           console.error('Pagination failed:', err);
           this.loading = false;
+          this.cdr.markForCheck();
         },
       });
     } else {
