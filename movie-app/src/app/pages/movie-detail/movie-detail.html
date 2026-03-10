@@ -1,0 +1,45 @@
+<div *ngIf="loading" class="loading">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="!loading && movie" class="detail-page">
+  <!-- Back Button -->
+  <div class="back-bar">
+    <a routerLink="/" class="back-btn">← Back to Home</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Poster -->
+    <div class="poster-wrapper">
+      <img [src]="imageBase + movie.poster_path" [alt]="movie.title" class="poster" />
+    </div>
+
+    <!-- Info -->
+    <div class="info">
+      <h1 class="title">{{ movie.title }}</h1>
+      <p class="tagline" *ngIf="movie.tagline">{{ movie.tagline }}</p>
+
+      <div class="meta">
+        <span class="badge">⭐ {{ movie.vote_average | number: '1.1-1' }}</span>
+        <span class="badge">🕐 {{ movie.runtime }} min</span>
+        <span class="badge">📅 {{ movie.release_date | date: 'mediumDate' }}</span>
+        <span class="badge">{{ movie.status }}</span>
+      </div>
+
+      <!-- Genres -->
+      <div class="genres">
+        <span *ngFor="let g of movie.genres" class="genre">{{ g.name }}</span>
+      </div>
+
+      <!-- Overview -->
+      <p class="overview">{{ movie.overview }}</p>
+
+      <!-- Watchlist Button -->
+      <button (click)="toggle()" [class.added]="watchlist.isAdded(movie.id)">
+        {{ watchlist.isAdded(movie.id) ? '✅ Remove from Watchlist' : '+ Add to Watchlist' }}
+      </button>
+    </div>
+  </div>
+</div>

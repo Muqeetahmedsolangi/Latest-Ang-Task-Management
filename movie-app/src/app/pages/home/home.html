@@ -1,0 +1,44 @@
+<div class="home">
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1 class="logo">🎬 CineTrack</h1>
+    <p class="tagline">Discover, Search & Track your favorite movies</p>
+    <app-search-bar (searched)="onSearch($event)" />
+  </div>
+
+  <!-- Section Title -->
+  <div class="section-header">
+    <h2>{{ currentQuery ? '🔍 Search Results' : '🔥 Trending This Week' }}</h2>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Movies Grid -->
+  <div class="grid" *ngIf="!loading">
+    <app-movie-card
+      *ngFor="let movie of movies"
+      [movie]="movie"
+      [isInWatchlist]="isInWatchlist(movie.id)"
+      (addToWatchlist)="onAdd($event)"
+      (removeFromWatchlist)="onRemove($event)"
+    />
+  </div>
+
+  <!-- No Results -->
+  <div class="no-results" *ngIf="!loading && movies.length === 0">
+    <p>😕 Koi movie nahi mili!</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="!loading && totalPages > 1">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">◀ Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Next ▶
+    </button>
+  </div>
+</div>
